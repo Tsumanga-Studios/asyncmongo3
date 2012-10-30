@@ -28,9 +28,9 @@ import struct
 import logging
 
 from bson import SON
-from errors import ProgrammingError, IntegrityError, InterfaceError, AuthenticationError
-import message
-import helpers
+from .errors import ProgrammingError, IntegrityError, InterfaceError, AuthenticationError
+from . import message
+from . import helpers
 
 class Connection(object):
     """
@@ -44,11 +44,11 @@ class Connection(object):
     """
     def __init__(self, host, port, dbuser=None, dbpass=None, autoreconnect=True, pool=None,
                  backend="tornado"):
-        assert isinstance(host, (str, unicode))
+        assert isinstance(host, str)
         assert isinstance(port, int)
         assert isinstance(autoreconnect, bool)
-        assert isinstance(dbuser, (str, unicode, None.__class__))
-        assert isinstance(dbpass, (str, unicode, None.__class__))
+        assert isinstance(dbuser, (str, None.__class__))
+        assert isinstance(dbpass, (str, None.__class__))
         assert pool
         self.__host = host
         self.__port = port
@@ -79,7 +79,7 @@ class Connection(object):
             self.__stream = self.__backend.register_stream(s)
             self.__stream.set_close_callback(self._socket_close)
             self.__alive = True
-        except socket.error, error:
+        except socket.error as error:
             raise InterfaceError(error)
         
         if self.__dbuser and self.__dbpass:
@@ -139,7 +139,7 @@ class Connection(object):
                 self.__request_id = None
                 self.__pool.cache(self)
                 
-        except IOError, e:
+        except IOError as e:
             self.__alive = False
             raise
         # return self.__request_id 
@@ -158,7 +158,7 @@ class Connection(object):
         # logging.info('waiting for another %d bytes' % length - 16)
         try:
             self.__stream.read(length - 16, callback=self._parse_response)
-        except IOError, e:
+        except IOError as e:
             self.__alive = False
             raise
     
@@ -176,7 +176,7 @@ class Connection(object):
         
         try:
             response = helpers._unpack_response(response, request_id) # TODO: pass tz_awar
-        except Exception, e:
+        except Exception as e:
             logging.error('error %s' % e)
             callback(None, e)
             return

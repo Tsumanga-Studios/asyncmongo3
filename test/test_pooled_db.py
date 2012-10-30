@@ -3,7 +3,7 @@ import logging
 import time
 from asyncmongo.errors import TooManyConnections
 
-import test_shunt
+from . import test_shunt
 import asyncmongo
 TEST_TIMESTAMP = int(time.time())
 
@@ -13,7 +13,7 @@ class PooledDBTest(test_shunt.MongoTest):
         This tests simply verifies that we can grab two different connections from the pool
         and use them independantly.
         """
-        print asyncmongo.__file__
+        print(asyncmongo.__file__)
         test_shunt.setup()
         client = asyncmongo.Client('id1', maxconnections=5, host='127.0.0.1', port=27017, dbname='test')
         test_users_collection = client.connection('test_users')

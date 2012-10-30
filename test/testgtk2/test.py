@@ -42,8 +42,8 @@ class TestApp(object):
         rand = base64.b64encode(os.urandom(32))
         try:
             self._db.test.insert({ 'blah': rand }, callback=self._on_insertion)
-        except Exception, e:
-            print e
+        except Exception as e:
+            print(e)
             
     def _on_insertion(self, data, error):
         if error:

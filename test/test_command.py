@@ -1,6 +1,6 @@
 import tornado.ioloop
 
-import test_shunt
+from . import test_shunt
 import asyncmongo
 
 
