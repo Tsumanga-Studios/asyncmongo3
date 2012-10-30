@@ -1,17 +1,20 @@
-asyncmongo
-==========
+asyncmongo3
+===========
 
 AsyncMongo is an asynchronous library for accessing mongo 
 which is built on the tornado ioloop.
 
+This fork is an experimental attempt to make it work in Python 3.
+Initially it will be a quick and dirty fix, with no attempt to
+ensure it still works under Python 2.
+
 Installation
 ------------
 
-Installing: `pip install asyncmongo`
+Installing form github: `pip-3.2 install  git+https://github.com/Tsumanga-Studios/asyncmongo3.git`
+(or whatever your Python 3 pip is called)
 
-Installing form github: `pip install  git+https://github.com/bitly/asyncmongo.git`
-
-Installing from source: `git clone git://github.com/bitly/asyncmongo.git; cd asyncmongo; python setup.py install`
+Installing from source: `git clone git://github.com/Tsumanga-Studios/asyncmongo3.git; cd asyncmongo; python3 setup.py install`
 
 Usage
 -----
@@ -43,7 +46,7 @@ asyncmongo syntax strives to be similar to [pymongo](http://api.mongodb.org/pyth
 About
 -----
 
-Some features are not currently implemented: 
+As of latest merge from upstream: some features are not currently implemented: 
 
 * directly interfacing with indexes, dropping collections
 * retrieving results in batches instead of all at once 
@@ -51,15 +54,20 @@ Some features are not currently implemented:
 * native Replica Set support #16
 * tailable cursors #15
 
+But also - it hasn't been converted yet so it doesn't work at all in Python 3. Watch this space.
+
 
 Requirements
 ------------
-The following two python libraries are required
+The following two python libraries are required.
 
 * [pymongo](http://github.com/mongodb/mongo-python-driver) version 1.9+ for bson library
 * [tornado](http://github.com/facebook/tornado)
 
+Versions of them exist for Python 3 - use those ones.
+
 Issues
 ------
 
-Please report any issues via [github issues](https://github.com/bitly/asyncmongo/issues)
+Please report any issues via [github issues](https://github.com/Tsumanga-Studios/asyncmongo3/issues)
+But only after branch initial-fixes is merged in. Until then, we already know it doesn't work yet.
