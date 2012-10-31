@@ -54,7 +54,7 @@ As of latest merge from upstream: some features are not currently implemented:
 * native Replica Set support #16
 * tailable cursors #15
 
-But also - it hasn't been converted yet so it doesn't work at all in Python 3. Watch this space.
+It is also likely to be broken in various ways due to subtle differences between Python 2 and Python 3 semantics.
 
 
 Requirements
@@ -70,4 +70,4 @@ Issues
 ------
 
 Please report any issues via [github issues](https://github.com/Tsumanga-Studios/asyncmongo3/issues)
-But only after branch initial-fixes is merged in. Until then, we already know it doesn't work yet.
+
