@@ -16,8 +16,8 @@
 
 from threading import Condition
 import logging
-from errors import TooManyConnections, ProgrammingError
-from connection import Connection
+from .errors import TooManyConnections, ProgrammingError
+from .connection import Connection
 
 
 class ConnectionPools(object):
@@ -29,7 +29,7 @@ class ConnectionPools(object):
         :Parameters:
             - `pool_id`: unique id for a connection pool
         """
-        assert isinstance(pool_id, (str, unicode))
+        assert isinstance(pool_id, str)
         if not hasattr(self, '_pools'):
             self._pools = {}
         if pool_id not in self._pools:
@@ -49,7 +49,7 @@ class ConnectionPools(object):
                 pool = self._pools[pool_id]
                 pool.close()
         else:
-            for pool_id, pool in self._pools.items():
+            for pool_id, pool in list(self._pools.items()):
                 pool.close()
 
 class ConnectionPool(object):
@@ -77,7 +77,7 @@ class ConnectionPool(object):
         assert isinstance(maxcached, int)
         assert isinstance(maxconnections, int)
         assert isinstance(maxusage, int)
-        assert isinstance(dbname, (str, unicode, None.__class__))
+        assert isinstance(dbname, (str, None.__class__))
         assert isinstance(slave_okay, bool)
         if mincached and maxcached:
             assert mincached <= maxcached

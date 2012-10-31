@@ -3,7 +3,7 @@ import time
 import logging
 import subprocess
 
-import test_shunt
+from . import test_shunt
 import asyncmongo
 
 TEST_TIMESTAMP = int(time.time())

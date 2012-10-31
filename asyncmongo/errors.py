@@ -23,7 +23,7 @@
 #             |__ProgrammingError
 #             |__NotSupportedError
 
-class Error(StandardError):
+class Error(Exception):
     pass
 
 class InterfaceError(Error):
@@ -41,7 +41,7 @@ class IntegrityError(DatabaseError):
         self.msg = msg
     
     def __unicode__(self):
-        return u'IntegrityError: %s code:%s' % (self.msg, self.code or '')
+        return 'IntegrityError: %s code:%s' % (self.msg, self.code or '')
     
     def __str__(self):
         return str(self.__unicode__())

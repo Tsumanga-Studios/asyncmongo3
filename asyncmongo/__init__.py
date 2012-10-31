@@ -17,6 +17,9 @@
 """
 AsyncMongo is an asynchronous library for accessing mongo 
 http://github.com/bitly/asyncmongo
+
+This is a fork for Python3
+http://github.com/Tsumanga-Studios/asyncmongo3
 """
 try:
     import bson
@@ -34,6 +37,6 @@ DESCENDING = -1
 GEO2D = "2d"
 """Index specifier for a 2-dimensional `geospatial index`"""
 
-from errors import Error, InterfaceError, DatabaseError, DataError, IntegrityError, ProgrammingError, NotSupportedError
+from .errors import Error, InterfaceError, DatabaseError, DataError, IntegrityError, ProgrammingError, NotSupportedError
 
-from client import Client
+from .client import Client

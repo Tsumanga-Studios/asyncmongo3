@@ -2,7 +2,7 @@ import tornado.ioloop
 import logging
 import time
 
-import test_shunt
+from . import test_shunt
 import asyncmongo
 
 
@@ -11,7 +11,7 @@ class QueryTest(test_shunt.MongoTest, test_shunt.SynchronousMongoTest):
 
     def setUp(self):
         super(QueryTest, self).setUp()
-        self.pymongo_conn.test.foo.insert([{'i': i} for i in xrange(200)])
+        self.pymongo_conn.test.foo.insert([{'i': i} for i in range(200)])
 
     def test_query(self):
         db = asyncmongo.Client(pool_id='test_query', host='127.0.0.1', port=int(self.mongod_options[0][1]), dbname='test', mincached=3)

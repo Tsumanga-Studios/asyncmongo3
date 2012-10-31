@@ -6,9 +6,9 @@ import tornado.ioloop
 import tornado.web
 import tornado.options
 import logging
-import simplejson as json
+import json
 import asyncmongo
-import pymongo.json_util
+import bson.json_util
 import base64
 import settings
 
@@ -23,7 +23,7 @@ class BaseHandler(tornado.web.RequestHandler):
     def api_response(self, data):
         """return an api response in the proper output format with status_code == 200"""
         self.set_header("Content-Type", "application/javascript; charset=UTF-8")
-        data = json.dumps(data, default=pymongo.json_util.default)
+        data = json.dumps(data, default=bson.json_util.default)
         self.finish(data)
 
 
@@ -33,8 +33,9 @@ class Put(BaseHandler):
         rand = base64.b64encode(os.urandom(32))
         try:
             self.db.test.insert({ 'blah': rand }, callback=self.async_callback(self.finish_save))
-        except Exception, e:
+        except Exception as e:
             logging.error(e)
+            raise
             return self.api_response({'status':'ERROR', 'status_string': '%s' % e})
     
     def finish_save(self, response, error):

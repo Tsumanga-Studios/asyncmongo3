@@ -2,7 +2,7 @@ import tornado.ioloop
 import logging
 import time
 
-import test_shunt
+from . import test_shunt
 import asyncmongo
 from asyncmongo.errors import DataError
 

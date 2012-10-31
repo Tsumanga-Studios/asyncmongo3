@@ -14,9 +14,9 @@
 # License for the specific language governing permissions and limitations
 # under the License.
 
-from errors import DataError
-from pool import ConnectionPools
-from cursor import Cursor
+from .errors import DataError
+from .pool import ConnectionPools
+from .cursor import Cursor
 from bson.son import SON
 
 class Client(object):
@@ -135,7 +135,7 @@ class Client(object):
         .. mongodoc:: commands
         """
 
-        if isinstance(command, basestring):
+        if isinstance(command, str):
             command = SON([(command, value)])
 
         command.update(kwargs)

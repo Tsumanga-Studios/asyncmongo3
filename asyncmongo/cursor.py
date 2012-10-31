@@ -18,9 +18,10 @@ import logging
 
 from bson.son import SON
 
-import helpers
-import message
+from . import helpers
+from . import message
 import functools
+import collections
 
 _QUERY_OPTIONS = {
     "tailable_cursor": 2,
@@ -33,8 +34,8 @@ class Cursor(object):
         it will transparently release connections back to the pool after they receive responses
     """
     def __init__(self, dbname, collection, pool):
-        assert isinstance(dbname, (str, unicode))
-        assert isinstance(collection, (str, unicode))
+        assert isinstance(dbname, str)
+        assert isinstance(collection, str)
         assert isinstance(pool, object)
         
         self.__dbname = dbname
@@ -44,7 +45,7 @@ class Cursor(object):
     
     @property
     def full_collection_name(self):
-        return u'%s.%s' % (self.__dbname, self.__collection)
+        return '%s.%s' % (self.__dbname, self.__collection)
     
     def drop(self, *args, **kwargs):
         raise NotImplemented("patches accepted")
@@ -106,7 +107,7 @@ class Cursor(object):
         if kwargs:
             safe = True
         
-        if safe and not callable(callback):
+        if safe and not isinstance(callback, collections.Callable):
             raise TypeError("callback must be callable")
         if not safe and callback is not None:
             raise TypeError("callback can not be used with safe=False")
@@ -136,7 +137,7 @@ class Cursor(object):
         if kwargs:
             safe = True
         
-        if safe and not callable(callback):
+        if safe and not isinstance(callback, collections.Callable):
             raise TypeError("callback must be callable")
         if not safe and callback is not None:
             raise TypeError("callback can not be used with safe=False")
@@ -234,7 +235,7 @@ class Cursor(object):
         if kwargs:
             safe = True
         
-        if safe and not callable(callback):
+        if safe and not isinstance(callback, collections.Callable):
             raise TypeError("callback must be callable")
         if not safe and callback is not None:
             raise TypeError("callback can not be used with safe=False")
@@ -347,7 +348,7 @@ class Cursor(object):
             raise TypeError("snapshot must be an instance of bool")
         if not isinstance(tailable, bool):
             raise TypeError("tailable must be an instance of bool")
-        if not callable(callback):
+        if not isinstance(callback, collections.Callable):
             raise TypeError("callback must be callable")
         
         if fields is not None:
@@ -389,7 +390,7 @@ class Cursor(object):
                               self.__query_spec(),
                               self.__fields), 
                 callback=functools.partial(self._handle_response, orig_callback=callback))
-        except Exception, e:
+        except Exception as e:
             logging.error('Error sending query %s' % e)
             connection.close()
             raise
@@ -401,7 +402,7 @@ class Cursor(object):
                 connection.send_message(
                     message.kill_cursors([result['cursor_id']]),
                     callback=None)
-            except Exception, e:
+            except Exception as e:
                 logging.error('Error killing cursor %s: %s' % (result['cursor_id'], e))
                 connection.close()
                 raise

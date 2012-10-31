@@ -1,5 +1,6 @@
 import tornado.options
 import random
+import collections
 tornado.options.define("environment", default="dev", help="environment")
 
 def randomize(values):
@@ -21,6 +22,6 @@ def get(key):
     if env not in options:
         raise Exception("Invalid Environment (%s)" % env)
     v = options.get(env).get(key) or default.get(key)
-    if callable(v):
+    if isinstance(v, collections.Callable):
         return v()
     return v
