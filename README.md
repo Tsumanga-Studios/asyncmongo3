@@ -11,7 +11,7 @@ ensure it still works under Python 2.
 Installation
 ------------
 
-Installing form github: `pip-3.2 install  git+https://github.com/Tsumanga-Studios/asyncmongo3.git`
+Installing from github: `pip-3.2 install  git+https://github.com/Tsumanga-Studios/asyncmongo3.git`
 (or whatever your Python 3 pip is called)
 
 Installing from source: `git clone git://github.com/Tsumanga-Studios/asyncmongo3.git; cd asyncmongo; python3 setup.py install`
